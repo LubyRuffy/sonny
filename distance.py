@@ -1,16 +1,20 @@
+from pigpio import RISING_EDGE, FALLING_EDGE
 import interfacing
+from interfacing import pi
 
+start_time=0
+stop_time=0
 
 # get start tick
 def echo_start():
-    echo_start_time = pi.get_current_tick()
-    return echo_start_time
+    global start_time
+    start_time = pi.get_current_tick()
 
 
 # get stop tick
 def echo_stop():
-    echo_stop_time = pi.get_current_tick()
-    return echo_stop_time
+    global stop_time
+    stop_time = pi.get_current_tick()
 
 
 # calculate distance
@@ -26,10 +30,12 @@ def ultrasonic_read():
     pi.write(interfacing.trigger, 0)
     
     # reading echo
-    start_time = pi.callback(
-        interfacing.echo, pigpio.RISING_EDGE, echo_start())
-    stop_time = pi.callback(interfacing.echo, pigpio.FALLING_EDGE, echo_stop())
+    pi.callback(
+        interfacing.echo, RISING_EDGE, echo_start())
+    pi.callback(interfacing.echo, FALLING_EDGE, echo_stop())
     
+def calculate_distance():
+    ultrasonic_read()
     round_trip_time = (stop_time - start_time)
     
     # calculating distance
