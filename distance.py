@@ -1,8 +1,6 @@
-from gpiozero import DistanceSensor
-from interfacing import echo,trigger
 from time import sleep
+from interfacing import sensor
 
-sensor = DistanceSensor(echo, trigger)
 
 def calculate_distance():
     return round(sensor.distance*100,2)
