@@ -3,8 +3,8 @@ import pigpio
 pi = pigpio.pi()
 
 # ultrasonic
-echo = 1
-trigger = 2
+echo = 15
+trigger = 14
 
 def init():
     # initialize pins

@@ -1,10 +1,11 @@
-from distance import calculate_distance
-import interfacing
-from interfacing import pi
+from interfacing import pi,init
+from bubble import bubble
+
+init()
 
 def main():
-	interfacing.init()
-	print(calculate_distance())
+	bubble()
 
 if __name__ == '__main__':
-	main()
+	while True:
+		main()
