@@ -1,1 +1,10 @@
 __pycache__/*
+*.aux
+*.bbl
+*.blg
+*.lof
+*.lot
+*.pdf
+*.tcp
+*.toc
+*.tps
