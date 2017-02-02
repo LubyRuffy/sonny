@@ -1,7 +1,4 @@
-from interfacing import pi,init
 from bubble import bubble
-
-init()
 
 def main():
 	bubble()
