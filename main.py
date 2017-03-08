@@ -1,8 +1,10 @@
 from bubble import bubble
 
+
 def main():
-	bubble()
+    bubble()
+
 
 if __name__ == '__main__':
-	while True:
-		main()
+    while True:
+        main()
