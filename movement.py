@@ -1,8 +1,9 @@
 from interfacing import motor_rear, motor_front
 
-linear = 0
-turn = 0
+linear = 0  # 1 for forward, 0 for stop, -1 for reverse
+turn = 0  # -1 for left, 1 for right, 0 for center
 
+speed = 0.3
 
 direction = (linear, turn)
 
@@ -19,7 +20,7 @@ def bot_forward(turn_flag):
         motor_front.forward(1)
     else:
         motor_front.backward(1)
-    motor_rear.forward(0.3)
+    motor_rear.forward(speed)
 
 
 def bot_backward(turn_flag):
@@ -29,13 +30,13 @@ def bot_backward(turn_flag):
         motor_front.forward(1)
     else:
         motor_front.backward(1)
-    motor_rear.backward(0.3)
+    motor_rear.backward(speed)
 
 
 def bot_map(direction):
-    if direction[linear] == 0:
-        bot_stop()
-    elif direction[linear] == 1:
+    if direction[linear] == 1:
         bot_forward(direction[turn])
-    else:
+    elif direction[linear] == -1:
         bot_backward(direction[turn])
+    else:
+        bot_stop()
