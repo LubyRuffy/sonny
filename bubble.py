@@ -2,6 +2,8 @@ from distance import calculate_distance
 from math import pow
 from random import random
 from imu import calculate_speed
+from motors import *
+from servo import sweep
 
 weight_speed=round(random(),2)
 weight_distance=round(random(),2)
@@ -22,6 +24,6 @@ def update_weights():
 	weight_speed+=weight_speed*round(random(),2)
 
 def bubble():
-	#default move forward
 	if(threshold<decision_factor()):
-		#stop
+		stop()
+		servo.sweep()

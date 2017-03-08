@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+
+\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+
+
+\section{Abstract} \label{sec:abstract}
+The aim of this project is to create a proof-of-concept model for an autonomous robot using artificial intelligence. Reinforcement learning methods will be implemented by making use of models incorporating artificial neural networks.
+
+Conventionally, obstacle avoidance has been implemented using a procedural approach that makes use of predefined values; that are arrived at by means of trial and error, largely. To eliminate the need for inaccurate and hard-to-determine fixed threshold values, we use Artificial Intelligence (hereinafter referred to solely as AI).
+
+All processing shall be done using an on-board computer, in this case a Raspberry Pi 3 Model B. An ultrasonic sensor will be mounted on a servo to read distances. A camera will be mounted to recognize and react to visual stimuli in the form of STOP or GO signs and signals. Using Digital Image Processing (also performed on the Pi), these can be recognized and reacted to. 
+
+Initially there will be zero knowledge present, and unsupervised learning will be performed. The robot will be set to default to forward movement until it collides with an obstacle while maintaining a buffer of all sensor readings at all time and then reads from the buffer every time a collision is made to learn the conditions at which collisions occur.
+
+Collision detection will be done using accelerometer values of the Inertial Measurement Unit (IMU). A mood variable will be used to keep track of collision by attaching a negative weight for every collision and positive increments for uninterrupted forward propagation as an implementation of semi-supervised learning. The cause and effect relation between collision and mood will then be the foundation for collision avoidance. Optimal path can be extrapolated by calculating the local maximum of the longest bitonic sub sequence in the array of distance readings taken in a sweep of the servo with the ultrasonic sensor mounted on top.
+
+Once obstacle avoidance is trained we can incorporate image and speech processing for inputs. Speed breakers can be crossed with adaptive speed. Variable PWM can be given for climbing slopes at a constant speed. Lights can be turned on automatically in the dark. 
+However self preservation in the vein of Isaac Asimov's laws of robotics can be implemented by letting the robot disobey a user command that puts the robot in the way of harm. 
+
+By the end of this project we aim to have an elementary exhibit of a truly autonomous self-driving car capable of making realtime decisions without human intervention.
+
+\newpage
+
+\input{tabfig}
+
+\newpage
+
+\input{introduction}
+
+\newpage
+
+\input{need}
+
+\newpage
+
+\input{litsurvey}
+
+\newpage
+
+\input{objectives}
+
+\newpage
+
+\input{methodology}
+
+\newpage
+
+\input{flowcharts}
+
+\end{document}
