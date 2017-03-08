@@ -1,33 +1,29 @@
 from distance import calculate_distance
 from math import pow
 from random import random
-from imu import calculate_speed
+from interfacing import imu
+from movement import bot_map, direction
 
 
-weight_speed = round(random(), 2)
-weight_distance = round(random(), 2)
-threshold = round(random(), 2)
+crash_flag = 0
 
 
-bias = (weight_speed * pow(calculate_speed(), 2)) - (
-    weight_distance * calculate_distance())
-
-
-def decision_factor():
-    distance_to_obstacle = calculate_distance()
-    decision_factor = (weight_speed * pow(calculate_speed(), 2)) / (
-        (weight_distance * distance_to_obstacle) + bias)
-    return decision_factor
-
-
-def update_weights():
-    global weight_speed
-    global weight_distance
-    global weight_threshold
-    weight_distance -= weight_distance * round(random(), 2)
-    weight_speed += weight_speed * round(random(), 2)
+def escape():
+    global crash_flag, direction, count
+    count += 1
+    print count
+    direction = (0, 0)
+    bot_map(direction)  # change to escape
 
 
 def bubble():
-    if(threshold<decision_factor()):
-        #stop
+    global crash_flag, direction
+    readings = imu.get_accel_data()
+    data = [readings[key] for key in readings]
+    for value in data:
+        if abs(value) > 30:
+            crash_flag = 1
+            escape()
+    if not crash_flag:
+        direction = (1, 0)
+    bot_map(direction)
