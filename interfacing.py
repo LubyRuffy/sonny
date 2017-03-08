@@ -1,21 +1,17 @@
-#import pigpio
-from gpiozero import DistanceSensor,Motor,AngularServo
-
-#pi = pigpio.pi()
+from gpiozero import Motor, DistanceSensor, AngularServo
+from mpu6050 import mpu6050
 
 # ultrasonic
-echo = 15
-trigger = 14
+sonar_echo = 15
+sonar_trigger = 14
+servo_input = 21
+motor_rear_1 = 26
+motor_rear_2 = 19
+motor_front_1 = 13
+motor_front_2 = 6
 
-sensor = DistanceSensor(echo, trigger)
-
-#motor
-rear_motor = Motor(26,19)
-front_motor = Motor(13,6)
-
-#servo
-servo = AngularServo(21,max_angle=90,min_angle=-90)
-
-# def init():
-#     # initialize pins
-#     pi.write(trigger, 0)
+imu = mpu6050(0x68)
+sonar = DistanceSensor(sonar_echo, sonar_trigger)
+sweep = AngularServo(servo_input, min_angle=-40, max_angle=45)
+motor_rear = Motor(motor_rear_1, motor_rear_2)
+motor_front = Motor(motor_front_1, motor_front_2)
