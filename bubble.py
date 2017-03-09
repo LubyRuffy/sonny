@@ -1,19 +1,32 @@
 from distance import calculate_distance
-from math import pow
-from random import random
-from interfacing import imu
+from interfacing import imu, sweep
 from movement import bot_map, direction
-
+from time import sleep
+from bitonic import longest_bitonic
 
 crash_flag = 0
 
 
+def mayday():
+    global crash_flag, direction
+    distances = [calculate_distance() for sweep.angle in range(-40, 46, 2)]
+    sweep.angle = -5
+    direction = (-1, 0)
+    sleep(3)
+    route = longest_bitonic(distances)
+    if route < 0:
+        direction = (1, -1)
+    else:
+        direction = (1, 1)
+    bot_map(direction)
+    crash_flag = 0
+
+
 def escape():
-    global crash_flag, direction, count
-    count += 1
-    print count
+    global crash_flag, direction
     direction = (0, 0)
     bot_map(direction)  # change to escape
+    mayday()
 
 
 def bubble():
