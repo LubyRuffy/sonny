@@ -1,25 +1,31 @@
 from random import random, seed
+from json import loads, dumps
+from movement import bot_map, direction
+from bubble import crash_flag
+
+turn_radius = 1.5
 
 def init(): # first time write to file
 	dump = open('dump.txt', 'w')
 	values = {'count' : 0, 'weight' : random(), \
 	'threshold' : 0, 'flag' : 0, 'alpha' : 0.05}
-	val_list = list(values.items())
-	dump.write(val_list)
+	values = dumps(values)
+	dump.write(values)
 	dump.close()
 
 
 def learn(distance):
+	global direction
 	dump = open('dump.txt', 'r')
 	#  read file
-	values = dump.readlines()
+	values = dump.read()
+	dump.close()
+
+	values = loads(values)
 	
 	product = values[distance] * values[weight]
 	print product
 	
-	if(product<threshold and distance==1.5):
-		print "Stopped at "+str(distance)
-		flag=1
-	if not flag:
-		threshold += 0.1
-		print threshold
+	if(product<values[threshold] or distance == turn_radius):
+		direction = (0,0)
+		bot_map(direction)
