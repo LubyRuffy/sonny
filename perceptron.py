@@ -17,7 +17,7 @@ def learn(distance):
 	product = values[distance] * values[weight]
 	print product
 	
-	if(product<threshold && distance==1.5):
+	if(product<threshold and distance==1.5):
 		print "Stopped at "+str(distance)
 		flag=1
 	if not flag:
