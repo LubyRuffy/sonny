@@ -3,7 +3,8 @@ from interfacing import imu, sweep
 from movement import bot_map, direction
 from time import sleep
 from bitonic import longest_bitonic
-from learning import threshold, alpha
+from perceptron import threshold, learn
+from perceptron.init import values
 
 
 crash_flag = 0
@@ -32,14 +33,15 @@ def escape():
 
 
 def bubble():
-    global crash_flag, direction, threshold, alpha
+    global crash_flag, direction, threshold
     readings = imu.get_accel_data()
     data = [readings[key] for key in readings]
     for value in data:
         if abs(value) > 30:
             crash_flag = 1
             escape()
-            threshold -= alpha
+            threshold -= values['alpha']
     if not crash_flag:
         direction = (1, 0)
+        learn(calculate_distance())
     bot_map(direction)

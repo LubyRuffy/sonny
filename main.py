@@ -1,7 +1,9 @@
 from bubble import bubble
+from perceptron import init
 
 
 def main():
+    init()
     bubble()
 
 
