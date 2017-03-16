@@ -33,8 +33,9 @@ def bubble():
     global crash_flag, direction, values
     readings = imu.get_accel_data()
     data = [readings[key] for key in readings]
-    for value in data:
-        if abs(value) > 30:
+    for value in range(len(data)-1):
+        if abs(data[value]) > 10:
+            print "thoka"
             crash_flag = 1
             values['threshold'] -= values['alpha']
             escape()

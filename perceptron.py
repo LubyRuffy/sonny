@@ -23,10 +23,8 @@ def learn(distance):
     #  read file
     values = dump.read()
     dump.close()
-
     values = loads(values)
     product = distance * values['weight']
-    print product
-    if(product < values['threshold'] or distance <= turn_radius):
+    if product < values['threshold']:
         direction = (0, 0)
         bot_map(direction)

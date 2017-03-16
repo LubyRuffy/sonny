@@ -12,14 +12,19 @@ def bot_stop():
     motor_front.forward(0)
     motor_rear.forward(0)
 
+def bot_left():
+    motor_front.backward(0.5)
+
+def bot_right():
+    motor_front.forward(0.5)
 
 def bot_forward(turn_flag):
     if turn_flag == 0:
         motor_front.forward(0)
     elif turn_flag == 1:
-        motor_front.forward(1)
+        motor_front.forward(0.5)
     else:
-        motor_front.backward(1)
+        motor_front.backward(0.5)
     motor_rear.forward(speed)
 
 
@@ -27,16 +32,16 @@ def bot_backward(turn_flag):
     if turn_flag == 0:
         motor_front.forward(0)
     elif turn_flag == 1:
-        motor_front.forward(1)
+        motor_front.forward(0.5)
     else:
-        motor_front.backward(1)
+        motor_front.backward(0.5)
     motor_rear.backward(speed)
 
 
 def bot_map(direction):
-    if direction[linear] == 1:
-        bot_forward(direction[turn])
-    elif direction[linear] == -1:
-        bot_backward(direction[turn])
+    if direction[0] == 1:
+        bot_forward(direction[1])
+    elif direction[0] == -1:
+        bot_backward(direction[1])
     else:
         bot_stop()
