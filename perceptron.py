@@ -1,16 +1,17 @@
 from random import random, seed
 from json import loads, dumps
 from movement import bot_map, direction
-from bubble import crash_flag
 
+
+crash_flag = 0
 seed()
 turn_radius = 1.5
-
+values = {'count': 0, 'weight': random(),
+              'threshold': 0, 'flag': 0, 'alpha': 0.05}
 
 def init():  # first time write to file
+    global values
     dump = open('dump.txt', 'w')
-    values = {'count': 0, 'weight': random(),
-              'threshold': 0, 'flag': 0, 'alpha': 0.05}
     values = dumps(values)
     dump.write(values)
     dump.close()

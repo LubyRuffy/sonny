@@ -1,5 +1,6 @@
 from bubble import bubble
 from perceptron import init
+from movement import bot_stop
 
 
 def main():
@@ -7,6 +8,7 @@ def main():
 
 
 if __name__ == '__main__':
-	init()
+    bot_stop()
+    init()
     while True:
         main()
