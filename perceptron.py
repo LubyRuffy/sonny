@@ -5,9 +5,8 @@ from movement import bot_map, direction
 
 crash_flag = 0
 seed()
-turn_radius = 1.5
 values = {'count': 0, 'weight': random(),
-              'threshold': 0, 'flag': 0, 'alpha': 0.05}
+              'threshold': 0, 'flag': 0, 'alpha': 50}
 
 def init():  # first time write to file
     global values
@@ -18,13 +17,19 @@ def init():  # first time write to file
 
 
 def learn(distance):
-    global direction
+    global direction, values
     dump = open('dump.txt', 'r')
     #  read file
     values = dump.read()
     dump.close()
     values = loads(values)
-    product = distance * values['weight']
-    if product < values['threshold']:
+    print values
+    weight = values['weight']
+    print weight
+    threshold = values['threshold']
+    print threshold
+    product = distance * weight
+    if product < threshold:
         direction = (0, 0)
         bot_map(direction)
+        "ruka"

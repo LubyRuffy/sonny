@@ -1,4 +1,5 @@
 def longest_bitonic(distances):
+    print distances
     tendency = 0
     t_list = []
     choices = []
