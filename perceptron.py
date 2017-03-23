@@ -1,18 +1,17 @@
 from random import random, seed
-from json import loads, dumps
+from ast import literal_eval
 from movement import bot_map, direction
-
 
 crash_flag = 0
 seed()
 values = {'count': 0, 'weight': random(),
-              'threshold': 0, 'flag': 0, 'alpha': 50}
+          'threshold': 0, 'flag': 0, 'alpha': 50}
+
 
 def init():  # first time write to file
     global values
     dump = open('dump.txt', 'w')
-    values = dumps(values)
-    dump.write(values)
+    dump.write(str(values))
     dump.close()
 
 
@@ -20,10 +19,8 @@ def learn(distance):
     global direction, values
     dump = open('dump.txt', 'r')
     #  read file
-    values = dump.read()
+    values = literal_eval(dump.read())
     dump.close()
-    values = loads(values)
-    print values
     weight = values['weight']
     print weight
     threshold = values['threshold']
@@ -32,4 +29,3 @@ def learn(distance):
     if product < threshold:
         direction = (0, 0)
         bot_map(direction)
-        "ruka"
