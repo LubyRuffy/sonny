@@ -1,3 +1,4 @@
-check bitonic angle returning index values
 lipo
 active high set on boot
+imu coroutines
+FIX DOUBLE SWEEP!

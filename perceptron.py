@@ -22,9 +22,7 @@ def learn(distance):
     values = literal_eval(dump.read())
     dump.close()
     weight = values['weight']
-    print weight
     threshold = values['threshold']
-    print threshold
     product = distance * weight
     if product < threshold:
         direction = (0, 0)

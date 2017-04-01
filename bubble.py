@@ -5,8 +5,11 @@ from time import sleep
 from bitonic import longest_bitonic
 from perceptron import learn, crash_flag
 from perceptron import values
+from scipy.signal import medfilt
+from copy import deepcopy
+from collections import deque
 
-data_old = [10, 10]
+imu_buffer = deque([],5)
 
 def mayday():
     global crash_flag, direction
@@ -19,10 +22,12 @@ def mayday():
     distances = [calculate_distance() for sweep.angle in range(-40, 46)]
     sweep.angle = -5
     route = longest_bitonic(distances)
-    if route > 0:
+    if route > 42:
         direction = (1, -1)
+        print "left"
     else:
         direction = (1, 1)
+        print "right"
     bot_map(direction)
     sleep(2)
     crash_flag = 0
@@ -31,24 +36,26 @@ def mayday():
 def escape():
     global direction
     direction = (0, 0)
-    bot_map(direction)  # change to escape
+    bot_map(direction)
     mayday()
 
 
 def bubble():
-    global crash_flag, direction, values, data_old
-    readings = imu.get_accel_data()
-    data = [readings[key] for key in readings]
-    for value in range(len(data) - 1):
-        if (abs((abs(data[value]) - abs(data_old[value]))) > 25) \
-                or (calculate_distance() < 5):
-            crash_flag = 1
+    global crash_flag, direction, values, imu_buffer
+    imu_buffer.append(imu.get_accel_data()['x'])
+    readings = [abs(data) for data in imu_buffer]
+    readings = medfilt(readings)
+    for value in readings:
+        if value > 6:  #  tune this
+            imu_buffer.clear()
+            imu_buffer.append(0)
+            value = 0
             values['threshold'] += values['alpha']
+            crash_flag = 1
             escape()
     if not crash_flag:
         direction = (1, 0)
         learn(calculate_distance())
-    data_old = data
     dump = open('dump.txt', 'w')
     dump.write(str(values))
     dump.close()
