@@ -6,7 +6,7 @@ crash_flag = 0
 
 seed()
 values = {'count': 0, 'weight': random(),
-          'threshold': 0, 'flag': 0, 'alpha': 50}
+          'threshold': 0, 'flag': 0, 'alpha': 20}
 
 
 def init():  # first time write to file
@@ -18,10 +18,11 @@ def init():  # first time write to file
 
 def learn(distance):
     global direction, values
-    dump = open('dump.txt', 'r')
-    #  read file
-    values = literal_eval(dump.read())
-    dump.close()
+    print values
+    # dump = open('dump.txt', 'r')
+    # #  read file
+    # values = literal_eval(dump.read())
+    # dump.close()
     weight = values['weight']
     threshold = values['threshold']
     product = distance * weight

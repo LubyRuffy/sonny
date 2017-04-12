@@ -1,3 +1,5 @@
+inflection = 42
+
 def longest_bitonic(distances):
     tendency = 0
     t_list = []
@@ -25,6 +27,7 @@ def longest_bitonic(distances):
                     inflection = index
                     index += 1
                     run_length += 1
+
         choices.append(run_length)
         indices.append(inflection)
     for i, x in enumerate(choices):
