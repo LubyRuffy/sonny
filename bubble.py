@@ -1,5 +1,5 @@
 from distance import calculate_distance
-from interfacing import imu, sweep, reroute_flag
+from interfacing import imu, sweep
 from movement import bot_map, direction
 from time import sleep
 from bitonic import longest_bitonic
@@ -10,10 +10,10 @@ from collections import deque
 imu_buffer = deque([],10)
 
 def mayday():
-    global crash_flag, direction, reroute_flag
+    global crash_flag, direction
     direction = (-1, 0)
     bot_map(direction)
-    sleep(1)
+    sleep(3.5)
     direction = (0, 0)
     bot_map(direction)
     sleep(1)
@@ -22,14 +22,13 @@ def mayday():
     route = longest_bitonic(distances)
     if route > 42:
         direction = (1, -1)
-        print "left"
+        print "Optimal path: Left"
     else:
         direction = (1, 1)
-        print "right"
+        print "Optimal path: Right"
     bot_map(direction)
     sleep(5)
     crash_flag = 0
-    reroute_flag = 0
 
 
 def escape():
@@ -40,18 +39,14 @@ def escape():
 
 
 def bubble():
-    global crash_flag, direction, values, imu_buffer, reroute_flag
-    if reroute_flag:
-        escape()
+    global crash_flag, direction, values, imu_buffer
     imu_buffer.append(imu.get_accel_data()['x'])
-    sleep(0.2)
     readings = [abs(data) for data in imu_buffer]
     readings = readings[0::2]
-    print readings
     readings = medfilt(readings)
     for value in readings:
-        if value > 5:  #tune this
-            print "thoka"
+        if value > 7:  #tune this
+            print "Crash detected. Tuning weights and rerouting."
             imu_buffer.clear()
             imu_buffer.append(0)
             value = 0
@@ -60,8 +55,8 @@ def bubble():
             escape()
     if not crash_flag:
         direction = (1, 0)
-        learn(calculate_distance())
-        print "reroute_flag "+str(reroute_flag)
+        if learn(calculate_distance()):
+            escape()
     dump = open('dump.txt', 'w')
     dump.write(str(values))
     dump.close()

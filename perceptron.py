@@ -1,7 +1,6 @@
 from random import random, seed
 from ast import literal_eval
 from movement import bot_map, direction
-from interfacing import reroute_flag
 
 crash_flag = 0
 
@@ -18,7 +17,7 @@ def init():  # first time write to file
 
 
 def learn(distance):
-    global direction, values, reroute_flag
+    global direction, values
     dump = open('dump.txt', 'r')
     #  read file
     values = literal_eval(dump.read())
@@ -27,7 +26,9 @@ def learn(distance):
     threshold = values['threshold']
     product = distance * weight
     if product < threshold:
-        reroute_flag = 1
-        print "YAY"
+        print "Crash predicted. Commencing pre-emptive rerouting."
         direction = (0, 0)
         bot_map(direction)
+        return 1
+    else:
+        return 0

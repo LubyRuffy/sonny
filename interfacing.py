@@ -1,7 +1,6 @@
 from gpiozero import Motor, DistanceSensor, AngularServo
 from mpu6050 import mpu6050
 
-reroute_flag = 0
 # ultrasonic
 sonar_echo = 15
 sonar_trigger = 14

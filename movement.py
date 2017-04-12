@@ -23,11 +23,11 @@ def bot_right():
 
 def bot_forward(turn_flag):
     if turn_flag == 0:
-        motor_front.forward(0.3)
+        motor_front.forward(0)
     elif turn_flag == 1:
-        motor_front.forward(1)
+        motor_front.forward(speed)
     else:
-        motor_front.backward(0.3)
+        motor_front.backward(speed)
     motor_rear.forward(speed)
 
 
@@ -35,9 +35,9 @@ def bot_backward(turn_flag):
     if turn_flag == 0:
         motor_front.forward(0)
     elif turn_flag == 1:
-        motor_front.forward(0.3)
+        motor_front.forward(speed)
     else:
-        motor_front.backward(0.3)
+        motor_front.backward(speed)
     motor_rear.backward(speed)
 
 
