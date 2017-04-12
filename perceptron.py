@@ -3,9 +3,9 @@ from ast import literal_eval
 from movement import bot_map, direction
 
 crash_flag = 0
+
 seed()
-values = {'count': 0, 'weight': random(),
-          'threshold': 0, 'flag': 0, 'alpha': 50}
+values = {'weight': random(), 'threshold': 0, 'alpha': 30}
 
 
 def init():  # first time write to file
@@ -17,13 +17,18 @@ def init():  # first time write to file
 
 def learn(distance):
     global direction, values
-    dump = open('dump.txt', 'r')
-    #  read file
-    values = literal_eval(dump.read())
-    dump.close()
+    print values
+    # dump = open('dump.txt', 'r')
+    # #  read file
+    # values = literal_eval(dump.read())
+    # dump.close()
     weight = values['weight']
     threshold = values['threshold']
     product = distance * weight
     if product < threshold:
+        print "Crash predicted. Commencing pre-emptive rerouting."
         direction = (0, 0)
         bot_map(direction)
+        return 1
+    else:
+        return 0
