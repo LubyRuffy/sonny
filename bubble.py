@@ -18,7 +18,7 @@ def mayday():
     direction = (0, 0)
     bot_map(direction)
     sleep(1)
-    distances = [calculate_distance() for sweep.angle in range(-40, 46)]
+    distances = [calculate_distance() for sweep.angle in range(-40, 46, 3)]
     sweep.angle = -5
     route = longest_bitonic(distances)
     if route > 42:
@@ -28,7 +28,7 @@ def mayday():
         direction = (1, 1)
         print "Optimal path: Right"
     bot_map(direction)
-    sleep(5)
+#    sleep(5) shayad yehi tha wo gandu jo slow kar raha tha
 
 
 def escape():
@@ -45,6 +45,10 @@ def bubble():
     readings = readings[0::2]
     readings = medfilt(readings)
     print crash_flag
+    if not crash_flag:
+        direction = (1, 0)
+        if learn(calculate_distance()):
+            escape()
     for value in readings:
         if value > 10 or calculate_distance() < 5:  #tune this
             print "Crash detected. Tuning weights and rerouting."
@@ -53,10 +57,6 @@ def bubble():
             # value = 0
             values['threshold'] += values['alpha']
             crash_flag = 1
-            escape()
-    if not crash_flag:
-        direction = (1, 0)
-        if learn(calculate_distance()):
             escape()
     # dump = open('dump.txt', 'w')
     # dump.write(str(values))
