@@ -3,7 +3,7 @@ from interfacing import motor_rear, motor_front
 linear = 0  # 1 for forward, 0 for stop, -1 for reverse
 turn = 0  # -1 for left, 1 for right, 0 for center
 
-speed = 0.3
+speed = 0.2
 
 direction = (linear, turn)
 

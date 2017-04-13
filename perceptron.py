@@ -5,7 +5,7 @@ from movement import bot_map, direction
 crash_flag = 0
 
 seed()
-values = {'weight': random(), 'threshold': 0, 'alpha': 30}
+values = {'weight': random(), 'threshold': 0, 'alpha': 15}
 
 
 def init():  # first time write to file

@@ -14,7 +14,7 @@ def mayday():
     crash_flag = 0
     direction = (-1, 0)
     bot_map(direction)
-    sleep(1.5)
+    sleep(2.5)
     direction = (0, 0)
     bot_map(direction)
     sleep(1)
@@ -28,7 +28,6 @@ def mayday():
         direction = (1, 1)
         print "Optimal path: Right"
     bot_map(direction)
-#    sleep(5) shayad yehi tha wo gandu jo slow kar raha tha
 
 
 def escape():
@@ -44,7 +43,6 @@ def bubble():
     readings = [abs(data) for data in imu_buffer]
     readings = readings[0::2]
     readings = medfilt(readings)
-    print crash_flag
     if not crash_flag:
         direction = (1, 0)
         if learn(calculate_distance()):
@@ -52,9 +50,10 @@ def bubble():
     for value in readings:
         if value > 10 or calculate_distance() < 5:  #tune this
             print "Crash detected. Tuning weights and rerouting."
-            # imu_buffer.clear()
-            # imu_buffer.append(0)
-            # value = 0
+            imu_buffer.clear()
+            imu_buffer.append(0)
+            value = 0
+            readings = []
             values['threshold'] += values['alpha']
             crash_flag = 1
             escape()
